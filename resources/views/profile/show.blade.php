@@ -3,42 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PADUKA HOME</title>
+    <title>Profile</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        .search-input {
-            width: 0;
-            opacity: 0;
-            transition: width 0.3s ease, opacity 0.3s ease;
-        }
-        .search-input.active {
-            width: 200px;
-            opacity: 1;
-        }
-        .background-image {
-            background-image: url('https://wallpaperaccess.com/full/9677227.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-    </style>
-    <script>
-        function toggleSearch() {
-            const searchInput = document.getElementById('search-input');
-            searchInput.classList.toggle('active');
-            if (searchInput.classList.contains('active')) {
-                searchInput.focus();
-            }
-        }
-    </script>
 </head>
-<body class="bg-white background-image">
+<body class="bg-white">
     <!-- Navbar -->
     <nav class="bg-black text-white p-4">
         <div class="container mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-4">
                 <div class="text-xl font-bold">PADUKADIA</div>
-                {{-- <img src="path-to-logo" alt="Logo" class="h-8"> --}}
             </div>
             <div class="space-x-8">
                 <a href="#" class="hover:text-gray-400">Home</a>
@@ -53,7 +26,7 @@
                         </svg>
                     </button>
                 </div>
-                <a href="/profile" class="hover:text-gray-400">Profile</a>
+                <a href="#" class="hover:text-gray-400">Profile</a>
                 <a href="#" class="hover:text-gray-400" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                 <form id="logout-form" action="/logout" method="POST" style="display: none;">
                     @csrf
@@ -61,13 +34,27 @@
             </div>
         </div>
     </nav>
-    <div class="grid place-items-center min-h-screen">
-        <a href="/category/Cosmetic" class="bg-black rounded-lg shadow-lg p-6 w-full max-w-md">
-            <div class="text-center">
-                <h2 class="text-lg font-bold text-white">Cosmetics</h2>
-                <p class="text-gray-300 mt-1">All your cosmetic's need.</p>
+
+    <!-- Profile Section -->
+    <div class="container mx-auto my-10 p-5">
+        <h2 class="text-2xl font-bold mb-5 text-center">Profile</h2>
+        @if(session('success'))
+            <div class="bg-green-500 text-white p-3 rounded mb-4">
+                {{ session('success') }}
             </div>
-        </a>
+        @endif
+        <div class="bg-white p-5 rounded-lg shadow-md max-w-md mx-auto">
+            <div class="space-y-4">
+                <p><strong>Name:</strong> {{ $user->name }}</p>
+                <p><strong>Email:</strong> {{ $user->email }}</p>
+                <p><strong>Telephone Number:</strong> {{ $user->telephone_number }}</p>
+                <p><strong>Address:</strong> {{ $user->address }}</p>
+            </div>
+            <div class="mt-4 space-y-2">
+                <a href="{{ route('profile.edit') }}" class="block bg-black text-white px-4 py-2 rounded text-center">Edit Profile</a>
+                <a href="{{ route('profile.change-password') }}" class="block bg-black text-white px-4 py-2 rounded text-center">Change Password</a>
+            </div>
+        </div>
     </div>
 </body>
 </html>
