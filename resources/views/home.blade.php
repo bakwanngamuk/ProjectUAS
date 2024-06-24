@@ -42,7 +42,7 @@
             </div>
             <div class="space-x-8">
                 <a href="#" class="hover:text-gray-400">Home</a>
-                <a href="#" class="hover:text-gray-400">Toko Saya</a>
+                <a href="/toko-saya" class="hover:text-gray-400">Toko Saya</a>
             </div>
             <div class="space-x-4 flex items-center">
                 <div class="relative">
