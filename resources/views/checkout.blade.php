@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $product->name }}</title>
+    <title>Checkout</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-white">
@@ -12,7 +12,6 @@
         <div class="container mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-4">
                 <div class="text-xl font-bold">PADUKADIA</div>
-                {{-- <img src="path-to-logo" alt="Logo" class="h-8"> --}}
             </div>
             <div class="space-x-8">
                 <a href="/" class="hover:text-gray-400">Home</a>
@@ -39,15 +38,24 @@
     <!-- Content -->
     <div class="container mx-auto my-8">
         <div class="bg-white rounded-lg shadow-lg p-6">
-            <h1 class="text-3xl font-bold mb-4">{{ $product->name }}</h1>
-            <p class="text-gray-700 mb-4">{{ $product->description }}</p>
+            <h1 class="text-3xl font-bold mb-4">Checkout</h1>
+            <p class="text-gray-700 mb-4">Product: {{ $product->name }}</p>
             <p class="text-gray-900 font-semibold">Price: ${{ $product->price }}</p>
             <p class="text-gray-600 mb-4">Quantity: {{ $product->quantity }}</p>
-            <!-- Buy and Add to Cart Buttons -->
-            <div class="flex space-x-4">
-                <a href="{{ route('checkout', $product->id) }}" class="bg-black text-white py-2 px-4 rounded hover:bg-green-600">Buy Now</a>
-                <a href="{{ route('cart.add', $product->id) }}" class="bg-black text-white py-2 px-4 rounded hover:bg-blue-600">Add to Cart</a>
-            </div>
+            <!-- Payment Form -->
+            <form action="{{ route('payment.process') }}" method="POST">
+                @csrf
+                <div class="mb-4">
+                    <label for="payment_method" class="block text-gray-700 mb-2">Payment Method</label>
+                    <select name="payment_method" id="payment_method" class="w-full px-3 py-2 border border-gray-300 rounded" required>
+                        <option value="cod">Cash on Delivery</option>
+                        <option value="debit">Debit</option>
+                        <option value="credit">Credit</option>
+                        <option value="virtual_account">Virtual Account</option>
+                    </select>
+                </div>
+                <button type="submit" class="bg-black text-white py-2 px-4 rounded hover:bg-green-600">Proceed to Payment</button>
+            </form>
         </div>
     </div>
 </body>

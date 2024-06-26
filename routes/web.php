@@ -8,6 +8,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MyStoreController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\PaymentController;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('auth');
@@ -38,3 +40,16 @@ Route::post('/my-store/upload', [MyStoreController::class, 'upload'])->name('my-
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::get('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
 Route::get('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+
+
+// Other routes...
+
+Route::get('/checkout/{id}', [CheckoutController::class, 'checkout'])->name('checkout');
+
+
+// Rute lain...
+
+Route::post('/payment/process', [PaymentController::class, 'processPayment'])->name('payment.process');
+Route::get('/payment/success', function() {
+    return view('payment-success');
+})->name('payment.success');
