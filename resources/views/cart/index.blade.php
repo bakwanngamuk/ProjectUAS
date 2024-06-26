@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products in {{ ucfirst($category) }} Category</title>
+    <title>Shopping Cart</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         .search-input {
@@ -26,7 +26,7 @@
         }
     </script>
 </head>
-<body class="bg-white">
+<body class="bg-gray-100">
     <!-- Navbar -->
     <nav class="bg-black text-white p-4">
         <div class="container mx-auto flex justify-between items-center">
@@ -57,23 +57,57 @@
         </div>
     </nav>
     <!-- Content -->
-    <div class="container mx-auto my-8">
-        <h1 class="text-3xl font-bold mb-4">Products in {{ ucfirst($category) }} Category</h1>
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-2xl font-bold mb-4">Shopping Cart</h1>
 
-        @if ($products->isEmpty())
-            <p class="text-gray-500">No products found in this category.</p>
-        @else
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                @foreach ($products as $product)
-                    <a href="/product/{{ $product->id }}" class="block bg-white rounded-lg shadow-lg p-6 hover:bg-gray-100 transition">
-                        <h2 class="text-xl font-bold mb-2">{{ $product->name }}</h2>
-                        <p class="text-gray-700 mb-4">{{ $product->description }}</p>
-                        <p class="text-gray-900 font-semibold">Price: ${{ $product->price }}</p>
-                        <p class="text-gray-600">Quantity: {{ $product->quantity }}</p>
-                    </a>
-                @endforeach
+        @if(session('success'))
+            <div class="bg-green-100 text-green-700 p-4 rounded mb-4">
+                {{ session('success') }}
             </div>
         @endif
+
+        <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+            <div class="flex justify-between border-b pb-4 mb-4">
+                <div class="font-bold text-gray-700">Product</div>
+                <div class="font-bold text-gray-700">Quantity</div>
+                <div class="font-bold text-gray-700">Price</div>
+                <div class="font-bold text-gray-700">Total</div>
+                <div class="font-bold text-gray-700">Actions</div>
+            </div>
+
+            @foreach($cart as $id => $item)
+                <div class="flex justify-between items-center border-b pb-4 mb-4">
+                    <div class="w-2/5 flex items-center">
+                        <img src="https://via.placeholder.com/80" alt="Product Image" class="w-16 h-16 rounded mr-4">
+                        <div>
+                            <div class="font-bold text-gray-700">{{ $item['name'] }}</div>
+                        </div>
+                    </div>
+                    <div class="w-1/5 text-center">
+                        <input type="number" value="{{ $item['quantity'] }}" class="w-16 text-center border border-gray-300 rounded" readonly>
+                    </div>
+                    <div class="w-1/5 text-center">${{ number_format($item['price'], 2) }}</div>
+                    <div class="w-1/5 text-center">${{ number_format($item['total'], 2) }}</div>
+                    <div class="w-1/5 text-center">
+                        <a href="{{ route('cart.remove', $id) }}" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Remove</a>
+                    </div>
+                </div>
+            @endforeach
+
+            @php
+                $total = array_reduce($cart, function ($sum, $item) {
+                    return $sum + $item['total'];
+                }, 0);
+            @endphp
+
+            <div class="flex justify-end items-center">
+                <div class="text-xl font-bold">Total: ${{ number_format($total, 2) }}</div>
+            </div>
+        </div>
+
+        <div class="flex justify-end">
+            <button class="bg-blue-500 text-white px-6 py-3 rounded hover:bg-blue-600">Proceed to Checkout</button>
+        </div>
     </div>
 </body>
 </html>

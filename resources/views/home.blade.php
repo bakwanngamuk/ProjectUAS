@@ -54,6 +54,7 @@
                     </button>
                 </div>
                 <a href="/profile" class="hover:text-gray-400">Profile</a>
+                <a href="{{ route('cart.index') }}" class="hover:text-gray-400">Cart</a>
                 <a href="#" class="hover:text-gray-400" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                 <form id="logout-form" action="/logout" method="POST" style="display: none;">
                     @csrf
@@ -62,10 +63,16 @@
         </div>
     </nav>
     <div class="grid place-items-center min-h-screen">
-        <a href="/category/Cosmetic" class="bg-black rounded-lg shadow-lg p-6 w-full max-w-md">
+        <a href="/category/Cosmetic" class="bg-black rounded-lg shadow-lg p-6 w-full max-w-md mb-4">
             <div class="text-center">
                 <h2 class="text-lg font-bold text-white">Cosmetics</h2>
                 <p class="text-gray-300 mt-1">All your cosmetic's need.</p>
+            </div>
+        </a>
+        <a href="/category/Electronic" class="bg-black rounded-lg shadow-lg p-6 w-full max-w-md">
+            <div class="text-center">
+                <h2 class="text-lg font-bold text-white">Electronic</h2>
+                <p class="text-gray-300 mt-1">All your Electronic's need.</p>
             </div>
         </a>
     </div>

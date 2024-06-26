@@ -93,6 +93,7 @@
                         <p class="text-gray-700">{{ $product->description }}</p>
                         <p class="text-gray-900 font-semibold">Price: ${{ $product->price }}</p>
                         <p class="text-gray-600">Quantity: {{ $product->quantity }}</p>
+                        <a href="{{ url('product', $product->id) }}" class="block mt-2 bg-black text-white text-center py-2 rounded hover:bg-blue-600">View Product</a>
                     </div>
                 @endforeach
             </div>

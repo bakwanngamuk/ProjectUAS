@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MyStoreController;
+use App\Http\Controllers\CartController;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('auth');
@@ -33,3 +34,7 @@ Route::get('/toko-saya', [MyStoreController::class, 'index'])->name('my-store.in
 
 // Route untuk mengunggah produk
 Route::post('/my-store/upload', [MyStoreController::class, 'upload'])->name('my-store.upload');
+
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::get('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
+Route::get('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');

@@ -28,6 +28,7 @@
                     </button>
                 </div>
                 <a href="/profile" class="hover:text-gray-400">Profile</a>
+                <a href="{{ route('cart.index') }}" class="hover:text-gray-400">Cart</a>
                 <a href="#" class="hover:text-gray-400" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                 <form id="logout-form" action="/logout" method="POST" style="display: none;">
                     @csrf
@@ -41,7 +42,12 @@
             <h1 class="text-3xl font-bold mb-4">{{ $product->name }}</h1>
             <p class="text-gray-700 mb-4">{{ $product->description }}</p>
             <p class="text-gray-900 font-semibold">Price: ${{ $product->price }}</p>
-            <p class="text-gray-600">Quantity: {{ $product->quantity }}</p>
+            <p class="text-gray-600 mb-4">Quantity: {{ $product->quantity }}</p>
+            <!-- Buy and Add to Cart Buttons -->
+            <div class="flex space-x-4">
+                <button class="bg-black text-white py-2 px-4 rounded hover:bg-green-600">Buy Now</button>
+                <a href="{{ route('cart.add', $product->id) }}" class="bg-black text-white py-2 px-4 rounded hover:bg-blue-600">Add to Cart</a>
+            </div>
         </div>
     </div>
 </body>
