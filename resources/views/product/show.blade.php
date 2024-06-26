@@ -47,24 +47,28 @@
             <!-- Rating and Reviews -->
             <h2 class="text-2xl font-bold mt-6">Ratings & Reviews</h2>
             <div class="mt-4">
-                @foreach ($product->reviews as $review)
-                    @if ($review->status == 'approved')
-                        <div class="border-t mt-4 pt-4">
-                            <div class="flex items-center mb-2">
-                                <div class="text-yellow-500">
-                                    @for ($i = 0; $i < $review->rating; $i++)
-                                        ★
-                                    @endfor
-                                    @for ($i = $review->rating; $i < 5; $i++)
-                                        ☆
-                                    @endfor
+                @if($product->reviews && $product->reviews->count() > 0)
+                    @foreach ($product->reviews as $review)
+                        @if ($review->status == 'approved')
+                            <div class="border-t mt-4 pt-4">
+                                <div class="flex items-center mb-2">
+                                    <div class="text-yellow-500">
+                                        @for ($i = 0; $i < $review->rating; $i++)
+                                            ★
+                                        @endfor
+                                        @for ($i = $review->rating; $i < 5; $i++)
+                                            ☆
+                                        @endfor
+                                    </div>
+                                    <div class="ml-4 text-gray-600">{{ $review->user->name }}</div>
                                 </div>
-                                <div class="ml-4 text-gray-600">{{ $review->user->name }}</div>
+                                <p class="text-gray-700">{{ $review->review }}</p>
                             </div>
-                            <p class="text-gray-700">{{ $review->review }}</p>
-                        </div>
-                    @endif
-                @endforeach
+                        @endif
+                    @endforeach
+                @else
+                    <p class="text-gray-700">No reviews yet.</p>
+                @endif
             </div>
 
             <!-- Write a Review -->

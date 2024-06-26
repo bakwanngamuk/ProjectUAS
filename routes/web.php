@@ -10,6 +10,7 @@ use App\Http\Controllers\MyStoreController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ReviewController;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('auth');
@@ -53,3 +54,6 @@ Route::post('/payment/process', [PaymentController::class, 'processPayment'])->n
 Route::get('/payment/success', function() {
     return view('payment-success');
 })->name('payment.success');
+
+Route::get('/products/{id}', [ProductController::class, 'show'])->name('product.show');
+Route::post('/products/{id}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
